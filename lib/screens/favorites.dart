@@ -11,8 +11,17 @@ class _FavoritesState extends State<Favorites> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Favoris'),
-        backgroundColor: Colors.orange,
+        title:  Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: Icon(Icons.star_border),
+            ),
+            Text('Favoris'),
+          ],
+        ),
+        backgroundColor: Colors.lightBlue,
       ),
       body: ListView(
         padding: const EdgeInsets.all(8),

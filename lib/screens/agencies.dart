@@ -1,4 +1,6 @@
+import 'package:SmartQ/widgets/agencies/agencyItem.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Agencies extends StatefulWidget {
@@ -9,92 +11,110 @@ class Agencies extends StatefulWidget {
 class _AgenciesState extends State<Agencies> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
+      backgroundColor: Color.fromRGBO(255, 255, 255, 1.0),
       appBar: AppBar(
-        title: Text('Agences'),
-        backgroundColor: Colors.red,
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: Icon(Icons.search),
+          ),
+        ],
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            // Padding(
+            //   padding: const EdgeInsets.only(right: 10,left: 10),
+            //   child: Icon(Icons.location_on),
+            // ),
+            Padding(
+              padding: const EdgeInsets.only(left: 50),
+              child: Text(
+                "Agences",
+                style: GoogleFonts.lato(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.blue,
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(8),
+      body: Column(
         children: <Widget>[
-          // ListTile(
-          //   title: Text(
-          //     'Inwi',
-          //     style: GoogleFonts.roboto(
-          //       fontSize: 24,
-          //       fontWeight: FontWeight.w700,
-          //     ),
-          //   ),
-          //   subtitle: Text('33 agence proche de toi'),
-          //   leading: CircleAvatar(
-          //     radius: 28,
-          //     backgroundImage: NetworkImage(
-          //         'https://i.pinimg.com/originals/e6/7f/2b/e67f2b955d8def67e25229355cb70bcf.jpg'),
-          //   ),
-
-          // ),
           Container(
-            height: 100,
-            padding: EdgeInsets.all(10),
-            margin: EdgeInsets.all(10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            height: 120,
+            color: Colors.white,
+            child: Column(
               children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        radius: 28,
-                        backgroundImage: NetworkImage(
-                            'https://i.pinimg.com/originals/e6/7f/2b/e67f2b955d8def67e25229355cb70bcf.jpg'),
-                      ),
-                    ),
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          'Inwi',
-                          style: GoogleFonts.roboto(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        Text(
-                          '33 agences proche de toi',
-                          style: GoogleFonts.lato(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.only(top:24.0),
+                  child: Text(
+                  "Les agences",
+                  style: GoogleFonts.lato(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w900,
+                  ),
+                  ),
                 ),
-                IconButton(
-                  icon: Icon(Icons.arrow_forward_ios),
-                  onPressed: () {},
-                  color: Colors.blueAccent,
-                  iconSize: 30,
-                )
+                                Padding(
+                                  padding: const EdgeInsets.only(top:8.0),
+                                  child: Text(
+                "les plus proches de votre localisation",
+                style: GoogleFonts.lato(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w500,
+                ),
+                ),
+                                ),
               ],
             ),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10),
-                  topRight: Radius.circular(10),
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: Offset(0, 3), // changes position of shadow
+          ),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(2),
+              children: <Widget>[
+                AgencyItem(
+                  nameOfAgency: 'Inwi',
+                  numberOfAgencies: 33,
+                  imageUrl:
+                      'https://live.staticflickr.com/4131/5410791885_b215933081_n.jpg',
+                ),
+                AgencyItem(
+                  nameOfAgency: 'IAM',
+                  numberOfAgencies: 29,
+                  imageUrl:
+                      'https://www.iam.ma/ImagesMarocTelecom/Phototh%C3%A8que/Images-grandes/maroc-telecom-blanc-ar-grande.jpg',
+                ),
+                AgencyItem(
+                  nameOfAgency: 'Attijari Wafabank',
+                  numberOfAgencies: 22,
+                  imageUrl:
+                      'https://www.attijariwafabank.com/sites/default/files/vactory_map_block/images/awb_factoring2x.png',
+                ),
+                AgencyItem(
+                  nameOfAgency: 'Wafachash',
+                  numberOfAgencies: 18,
+                  imageUrl:
+                      'https://pbs.twimg.com/profile_images/877112486478131200/bnTyuv-6_400x400.jpg',
+                ),
+                AgencyItem(
+                  nameOfAgency: 'Lydec',
+                  numberOfAgencies: 12,
+                  imageUrl:
+                      'https://www.fm6e.org/mobile/images/stories/logo-lidek.jpg',
+                ),
+                AgencyItem(
+                  nameOfAgency: 'Orange',
+                  numberOfAgencies: 12,
+                  imageUrl:
+                      'https://shortways.com/wp-content/uploads/2018/12/Logo-orange-rond-800x800.jpg',
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
