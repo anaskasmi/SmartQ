@@ -14,63 +14,76 @@ class _AgenciesState extends State<Agencies> {
     SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
       backgroundColor: Color.fromRGBO(255, 255, 255, 1.0),
-      appBar: AppBar(
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: Icon(Icons.search),
-          ),
-        ],
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            // Padding(
-            //   padding: const EdgeInsets.only(right: 10,left: 10),
-            //   child: Icon(Icons.location_on),
-            // ),
-            Padding(
-              padding: const EdgeInsets.only(left: 50),
-              child: Text(
-                "Agences",
-                style: GoogleFonts.lato(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-          ],
-        ),
-        backgroundColor: Colors.blue,
-      ),
+      // appBar: AppBar(
+      //   actions: <Widget>[
+      //     Padding(
+      //       padding: const EdgeInsets.only(right: 20),
+      //       child: Icon(Icons.search),
+      //     ),
+      //   ],
+      //   title: Row(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: <Widget>[
+      //       // Padding(
+      //       //   padding: const EdgeInsets.only(right: 10,left: 10),
+      //       //   child: Icon(Icons.location_on),
+      //       // ),
+      //       // Padding(
+      //       //   padding: const EdgeInsets.only(left: 50),
+      //       //   child: Text(
+      //       //     "Agences",
+      //       //     style: GoogleFonts.lato(
+      //       //       fontSize: 22,
+      //       //       fontWeight: FontWeight.w700,
+      //       //     ),
+      //       //   ),
+      //       // ),
+      //     ],
+      //   ),
+      //   backgroundColor: Colors.blue,
+      // ),
       body: Column(
         children: <Widget>[
           Container(
-            height: 120,
-            color: Colors.white,
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top:24.0),
-                  child: Text(
-                  "Les agences",
-                  style: GoogleFonts.lato(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w900,
+            height: 190,
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30.0),
+                    child: Image(
+                      image: AssetImage("assets/agency2.png"),
+                      height: 60,
+                    ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 0.0),
+                    child: Text(
+                      "Les agences",
+                      style: GoogleFonts.lato(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
                   ),
-                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top:8.0),
-                                  child: Text(
-                "les plus proches de votre localisation",
-                style: GoogleFonts.lato(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w500,
-                ),
-                ),
-                                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      "les plus proches de votre localisation",
+                      style: GoogleFonts.lato(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
+            padding: EdgeInsets.all(10),
+          ),
+          Divider(
+            height: 10,
+            color: Colors.orange,
           ),
           Expanded(
             child: ListView(

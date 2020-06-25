@@ -12,6 +12,9 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="SmartQ"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyDs8ZV5fpzt66YdlvteqDbBLwanlcw4Nno"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

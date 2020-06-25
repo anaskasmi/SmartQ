@@ -139,7 +139,7 @@ class AgencyItem extends StatelessWidget {
                   color: Colors.grey.withOpacity(0.6),
                   spreadRadius: 0.6,
                   blurRadius: 0.6,
-                  offset: Offset(0, 1), // changes position of shadow
+                  offset: Offset(0, 2), // changes position of shadow
                 ),
               ],
             ),
@@ -159,10 +159,10 @@ class AgencyItem extends StatelessWidget {
             bottomRight: Radius.circular(0)),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.6),
-            spreadRadius: 0.3,
-            blurRadius: 0.3,
-            offset: Offset(2, 1), // changes position of shadow
+            color: Colors.grey.withOpacity(1),
+            spreadRadius: 0.8,
+            blurRadius: 1,
+            offset: Offset(0.8,1), // changes position of shadow
           ),
         ],
       ),
