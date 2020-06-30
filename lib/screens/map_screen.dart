@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'services_screen.dart';
 
 class MapScreen extends StatefulWidget {
   @override
@@ -10,18 +12,52 @@ class MapScreen extends StatefulWidget {
 }
 
 class _MapScreenState extends State<MapScreen> {
-  Completer<GoogleMapController> _controller = Completer();
-
-  static final CameraPosition _kGooglePlex = CameraPosition(
+  //// Map Controller
+  GoogleMapController _mapController;
+  ////
+  BitmapDescriptor _markerIcon;
+  //// Map Markerss
+  Set<Marker> _markers = HashSet<Marker>();
+  //// first position
+  static final CameraPosition initialPosition = CameraPosition(
     target: LatLng(33.541381, -7.673741),
     zoom: 14,
   );
+  //set markers icon
+  void _setMarkerIcon() async {
+    _markerIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(), "assets/agency3.png");
+  }
 
-  static final CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
+  @override
+  void initState() {
+    super.initState();
+    this._setMarkerIcon();
+  }
+
+  //initialise map with markers
+  void _onMApCreated(GoogleMapController controller) {
+    _mapController = controller;
+    setState(() {
+      _markers.add(Marker(
+          markerId: MarkerId('0'),
+          position: LatLng(33.541381, -7.673741),
+          infoWindow: InfoWindow(title: "Inwi", snippet: "inwi Haj Fateh"),
+          icon: _markerIcon));
+      _markers.add(Marker(
+        markerId: MarkerId('1'),
+        position: LatLng(33.538426, -7.641794),
+        infoWindow: InfoWindow(title: "Inwi", snippet: "inwi Atlantic"),
+        icon: _markerIcon,
+        onTap: () => {},
+      ));
+      _markers.add(Marker(
+          markerId: MarkerId('2'),
+          position: LatLng(33.570820, -7.613070),
+          infoWindow: InfoWindow(title: "Inwi", snippet: "inwi 2 mars"),
+          icon: _markerIcon));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +67,9 @@ class _MapScreenState extends State<MapScreen> {
           Expanded(
             child: GoogleMap(
               mapType: MapType.normal,
-              initialCameraPosition: _kGooglePlex,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-              },
+              initialCameraPosition: initialPosition,
+              onMapCreated: _onMApCreated,
+              markers: _markers,
             ),
           ),
           Container(
@@ -146,19 +181,37 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                 ),
                 Container(
-                  height: 50,
-                  color: Colors.blueAccent,
-                ),
+                  color: Colors.transparent,
+                  width: MediaQuery.of(context).size.width - 30,
+                  height: 40,
+                  child: FlatButton(
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(5.0),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ServicesScreen()),
+                      );
+                    },
+                    color: Colors.blue[500],
+                    child: Text(
+                      "Get ticket",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.lato(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),
         ],
       ),
     );
-  }
-
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 }
