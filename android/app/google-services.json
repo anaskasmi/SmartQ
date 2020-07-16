@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "372972934797",
+    "firebase_url": "https://smartq-d86fc.firebaseio.com",
+    "project_id": "smartq-d86fc",
+    "storage_bucket": "smartq-d86fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:372972934797:android:5ebe4d98e56d29421774c4",
+        "android_client_info": {
+          "package_name": "com.example.SmartQ"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "372972934797-udaprg36ls27epg8ndsamlfsqpna8pdi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwMtP37RHlXLgHF4PdMwQThQ9MSAnj94o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "372972934797-udaprg36ls27epg8ndsamlfsqpna8pdi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

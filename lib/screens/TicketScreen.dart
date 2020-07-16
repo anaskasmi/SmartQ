@@ -1,21 +1,14 @@
-import 'package:SmartQ/screens/TicketScreen.dart';
+import 'package:SmartQ/screens/services_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:SmartQ/models/Service.dart';
 
-class ServicesScreen extends StatefulWidget {
+class TicketScreen extends StatefulWidget {
   @override
-  _ServicesScreenState createState() => _ServicesScreenState();
+  _TicketScreenState createState() => _TicketScreenState();
 }
 
-class _ServicesScreenState extends State<ServicesScreen> {
-  List services = <Service>[
-    Service(title: 'Achat'),
-    Service(title: 'La caisse'),
-    Service(title: "Demande d'information"),
-  ];
-  Service selectedService;
-
+class _TicketScreenState extends State<TicketScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +69,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                               ),
                               Container(
                                 child: Text(
-                                  "3 People Waiting",
+                                  "4 People Waiting",
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
                                     fontSize: 13,
@@ -210,49 +203,39 @@ class _ServicesScreenState extends State<ServicesScreen> {
             SizedBox(
               height: 20,
             ),
-            //services
+//phrase
             Container(
-              child: DropdownButton<dynamic>(
-                hint: Text("Select item"),
-                value: selectedService,
-                onChanged: (dynamic Value) {
-                  setState(() {
-                    selectedService = Value;
-                  });
-                },
-                items: services.map((dynamic service) {
-                  return DropdownMenuItem<dynamic>(
-                    value: service,
-                    child: Row(
-                      children: <Widget>[
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Container(
-                          width: 200,
-                          child: Text(
-                            service.title,
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
-                      ],
+              width: 500,
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Flexible(
+                    child: Text(
+                      "After calculating the distance between you and the agency you need to leave by at least 15 before the estimated time",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.lato(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black),
                     ),
-                  );
-                }).toList(),
+                  ),
+                ],
               ),
             ),
             SizedBox(
-              height: 90,
+              height: 20,
             ),
+
             //get Ticket
             Container(
               width: double.infinity,
               height: 50,
               padding: EdgeInsets.symmetric(horizontal: 60),
               child: FlatButton(
-                color: Colors.deepOrange.shade300,
+                color: Colors.red.shade300,
                 child: Text(
-                  "Confirmer",
+                  "Cancel",
                   textAlign: TextAlign.center,
                   style: GoogleFonts.lato(
                     fontSize: 17,
@@ -261,8 +244,10 @@ class _ServicesScreenState extends State<ServicesScreen> {
                   ),
                 ),
                 onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => TicketScreen()));
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ServicesScreen()));
                 },
               ),
             ),

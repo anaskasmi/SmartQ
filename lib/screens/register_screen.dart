@@ -1,24 +1,24 @@
 import 'package:SmartQ/providers/AuthProvider.dart';
-import 'package:SmartQ/screens/register_screen.dart';
 import 'package:SmartQ/utilities/styles/main_theme_styles.dart';
 import 'package:SmartQ/utilities/user_interface_utilities/screen_size.dart';
 import 'package:SmartQ/widgets/loginButton.dart';
+import 'package:SmartQ/widgets/registerButton.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:bot_toast/bot_toast.dart';
 
-class LoginScreen extends StatefulWidget {
+class RegisterScreen extends StatefulWidget {
   static final routeName = 'loginScreen';
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
-  String _email, _password;
+  String _email, _password, _name;
   bool waitingAuthResponse;
   AuthProvider authProvider;
 
@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _showErrorDialog(BuildContext context) {
     BotToast.showText(
-      text: "Coudn't Authenticate You! Please Try again",
+      text: "Something went wrong try other inputs! ",
       textStyle: GoogleFonts.poppins(
         textStyle: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
       ),
@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
           waitingAuthResponse = true;
         });
       }
-      authProvider.login(_email, _password).then((result) {
+      authProvider.register(_name, _email, _password).then((result) {
         if (!result) {
           _showErrorDialog(context);
           if (mounted) {
@@ -56,6 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
               waitingAuthResponse = false;
             });
           }
+        } else {
+          Navigator.pop(context);
         }
       });
     }
@@ -82,49 +84,76 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         children: <Widget>[
                           Container(
-                            child: Container(
-                              margin: EdgeInsets.only(top: 40),
-                              child: Column(
-                                children: <Widget>[
-                                  Center(
-                                    child: Text(
-                                      "Smart Q",
-                                      style: GoogleFonts.meriendaOne(
-                                        textStyle: TextStyle(
-                                          fontSize: SizeConfig.textSize * 14,
-                                          fontWeight: FontWeight.w300,
-                                          color: Colors.deepOrangeAccent,
-                                        ),
-                                      ),
-                                    ),
+                            margin: EdgeInsets.only(bottom: 25),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Icon(
+                                    Icons.close,
+                                    color: Colors.deepOrange,
+                                    size: 40,
                                   ),
-                                  Container(
-                                    child: Center(
-                                      child: Text(
-                                        "Make it timeless",
-                                        style: GoogleFonts.pacifico(
-                                          textStyle: TextStyle(
-                                            fontSize: SizeConfig.textSize * 4,
-                                            fontWeight: FontWeight.w100,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              "Register",
+                              style: GoogleFonts.poppins(
+                                textStyle: TextStyle(
+                                  fontSize: SizeConfig.textSize * 14,
+                                  fontWeight: FontWeight.w300,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
-                          SizedBox(
-                            height: SizeConfig.safeBlockVertical * 10,
+                          Container(
+                            child: Center(
+                              child: Text(
+                                "We can't wait to have you on board !",
+                                style: GoogleFonts.roboto(
+                                  textStyle: TextStyle(
+                                    fontSize: SizeConfig.textSize * 4,
+                                    fontWeight: FontWeight.w100,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(right: 90),
+                            margin: EdgeInsets.only(top: 90),
                             child: Form(
                                 key: _formKey,
                                 child: Column(
                                   children: <Widget>[
+                                    TextFormField(
+                                      keyboardType: TextInputType.text,
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w300),
+                                      decoration:
+                                          Style.formInputDecoration("Name"),
+                                      validator: (v) {
+                                        if (v.trim().isEmpty) {
+                                          return "this field cannot be empty!";
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                      onSaved: (v) {
+                                        this._name = v;
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: SizeConfig.blockSizeVertical * 2,
+                                    ),
                                     TextFormField(
                                       keyboardType: TextInputType.text,
                                       style: TextStyle(
@@ -154,6 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       decoration:
                                           Style.formInputDecoration("Password"),
                                       validator: (v) {
+                                        this._password = v;
                                         if (v.isEmpty) {
                                           return "this field cannot be empty!";
                                         } else if (v.length < 6) {
@@ -166,22 +196,33 @@ class _LoginScreenState extends State<LoginScreen> {
                                         this._password = v;
                                       },
                                     ),
+                                    SizedBox(
+                                      height: SizeConfig.blockSizeVertical * 2,
+                                    ),
+                                    TextFormField(
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w300),
+                                      obscureText: true,
+                                      decoration:
+                                          Style.formInputDecoration("Password"),
+                                      validator: (v) {
+                                        if (v.isEmpty) {
+                                          return "this field cannot be empty!";
+                                        } else if (v != this._password) {
+                                          return "Password unmatch !";
+                                        } else {
+                                          return null;
+                                        }
+                                      },
+                                      onSaved: (v) {},
+                                    ),
                                   ],
                                 )),
                           ),
                           SizedBox(
                             height: SizeConfig.blockSizeVertical * 3,
                           ),
-                          waitingAuthResponse
-                              ? Center(child: CircularProgressIndicator())
-                              : Container(
-                                  margin: EdgeInsets.only(right: 160),
-                                  child: LoginButton(
-                                    screenContext: context,
-                                    text: 'Log In',
-                                    onTap: _submit,
-                                  ),
-                                ),
                         ],
                       ),
                     ),
@@ -190,46 +231,16 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Container(
                 margin: EdgeInsets.only(right: 20, bottom: 13),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(left: 9),
-                      child: Text(
-                        "You dont have an account?",
-                        style: GoogleFonts.poppins(
-                          textStyle: TextStyle(color: Colors.white70),
-                          fontSize: 15,
-                          fontWeight: FontWeight.w300,
-                          fontStyle: FontStyle.normal,
+                child: waitingAuthResponse
+                    ? Center(child: CircularProgressIndicator())
+                    : Container(
+                        margin: EdgeInsets.only(),
+                        child: RegisterButton(
+                          screenContext: context,
+                          text: 'Register',
+                          onTap: _submit,
                         ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(left: 10),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => RegisterScreen()),
-                          );
-                        },
-                        child: Text(
-                          "Register",
-                          style: GoogleFonts.poppins(
-                            textStyle:
-                                TextStyle(color: Colors.deepOrangeAccent),
-                            fontSize: 15,
-                            fontWeight: FontWeight.w800,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               )
             ],
           ),

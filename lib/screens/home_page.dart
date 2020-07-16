@@ -4,19 +4,21 @@ import 'package:SmartQ/screens/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:SmartQ/providers/AuthProvider.dart';
+import 'package:provider/provider.dart';
 
 import 'package:bubbled_navigation_bar/bubbled_navigation_bar.dart';
 
 class HomePage extends StatefulWidget {
-  final titles = ['Agences', 'Favoris', 'Profil'];
+  final titles = ['Agences', 'Profil'];
   final colors = [
-    Colors.blue,
-    Colors.blue,
+    Colors.lightBlue.shade900,
+    // Colors.blue,
     Colors.blue,
   ];
   final icons = [
     Icons.location_on,
-    Icons.star_border,
+    // Icons.star_border,
     CupertinoIcons.profile_circled,
   ];
   HomePage({Key key}) : super(key: key);
@@ -25,6 +27,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  AuthProvider authProvider;
+
   PageController _pageController;
   MenuPositionController _menuPositionController;
   bool userPageDragging = false;
@@ -51,6 +55,12 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  @override
+  void didChangeDependencies() {
+    this.authProvider = Provider.of<AuthProvider>(context);
+    super.didChangeDependencies();
+  }
+
   void checkUserDragging(ScrollNotification scrollNotification) {
     if (scrollNotification is UserScrollNotification &&
         scrollNotification.direction != ScrollDirection.idle) {
@@ -74,7 +84,7 @@ class _HomePageState extends State<HomePage> {
             controller: _pageController,
             children: <Widget>[
               Agencies(),
-              Favorites(),
+              // Favorites(),
               Profile(),
             ],
             onPageChanged: (page) {},
